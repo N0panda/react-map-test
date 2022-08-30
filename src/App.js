@@ -29,27 +29,48 @@ function App() {
       setData(result)
 
 
-      
+
       const filteredResult = await result.json()
 
       const reducedCountry = filteredResult.data.reduce(
         (all, curr) => {
           const {
-            metadata: { country },
+            metadata: { country, device, browser, os },
           } = curr;
 
           for (let c in country) {
             if (all.country[c] == null) all.country[c] = country[c];
             else all.country[c] += country[c];
           }
+          for (let d in device) {
+            if (all.device[d] == null) all.device[d] = device[d];
+            else all.device[d] += device[d];
+          }
+          for (let b in browser) {
+            if (all.browser[b] == null) all.browser[b] = browser[b];
+            else all.browser[b] += browser[b];
+          }
+          for (let o in os) {
+            if (all.os[o] == null) all.os[o] = os[o];
+            else all.os[o] += os[o];
+          }
 
-          return { country: all.country };
+          return {
+            country: all.country,
+            device: all.device,
+            browser: all.browser,
+            os: all.os
+          };
         },
         {
           country: {},
+          device: {},
+          browser: {},
+          os: {}
         }
       );
-      
+      console.log(reducedCountry)
+
       setCountry(reducedCountry)
 
       const countMax = () => {

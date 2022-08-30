@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { geoPatterson } from "d3-geo-projection"
+import geoPatersonFunction from './geoPaterson'
 import { scaleLinear } from "d3-scale"
 import {
   ComposableMap,
@@ -11,9 +11,9 @@ import {
 const width = 800
 const height = 600
 
-const projection = geoPatterson()
+const projection = geoPatersonFunction()
   .translate([width / 2, height / 2])
-  .scale(50)
+  .scale(100)
 
 const colorScale = (elem, max) => {
   if (!max) return '#F2F0EC'
@@ -36,7 +36,7 @@ const MapChart = ({ setTooltipContent, fullCountryData, maxVisits }) => {
               try {
                 countryVisit = fullCountryData?.country[geo?.properties?.iso_a2_eh] ?? 0
               } catch (err) { }
-
+              console.log(typeof colorScale(50, 500))
               return (
                 <Geography
                   style={{
